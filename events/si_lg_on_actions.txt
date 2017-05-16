@@ -1,0 +1,137 @@
+namespace = si_lg_on_action
+
+#print_scope_trigger ##Note: if called with no scope will throw a bunch of warnings in the error log about "GetName" - PDX didn't code an exception
+#print_scope_effect
+
+##############################
+####  YEARLY PULSES ##########
+##############################
+##############################
+
+
+
+##### DIVERSIFICATION SYSTEM ######
+##Stellaris Improved - Game Start AI Empire Diversification
+##Fanatics have very focused modifiers. Non-fanatics get more general buffs
+event = {
+	# Entry point to yearly tension setting
+	id = si_lg_on_action.1
+	hide_window = yes
+	is_triggered_only = yes
+
+	immediate = {
+		every_country = { #Note: Every country includes guardians such as the enigmatic fortress...
+			limit = { is_ai = no }
+			#Settings for player diversification, if we need them
+			#print_scope_effect = yes
+		}
+
+		every_country = {
+			limit = { 
+				AND = {
+					is_ai = yes 
+					NOT = {
+						has_country_flag = special_country
+					}
+				}
+			}
+
+			#print_scope_effect = yes
+			#Fanatic Authoritarians
+			if = {
+				limit = {
+					has_ethic = ethic_fanatic_authoritarian
+					NOT = {
+						has_country_flag = special_country
+					}
+				}
+
+				log = "Found an authoritarian, rolling for secondaries"
+				random_list = {
+		 			60 = { } #Normal country, nothing special 
+		  			30 = { 
+		  				add_modifier = {
+		  					modifier = sied_fanatic_authoritarian_1
+		  					days = -1
+		  				}
+		  				set_country_flag = special_country
+		  				log = "Special authoritarian modifier added"
+		  			} #Special country, purity seekers
+		  			10 = {
+		  				add_modifier = {
+		  					modifier = sied_fanatic_authoritarian_1r
+		  					days = -1
+		  				}
+		  				set_country_flag = special_country
+		  				set_country_flag = very_special_country
+		  				log = "Very special authoritarian modifier added"
+		  			} #Very special country - Purity Zealots
+		  			
+		 		}
+			}
+
+
+			#Fanatic Egalatarians
+			if = {
+				limit = {
+					has_ethic = ethic_fanatic_egalitarian
+					NOT = {
+						has_country_flag = special_country
+					}
+				}
+
+				log = "Found an egalitarian, rolling for secondaries"
+				random_list = {
+		 			60 = { } #Normal country, nothing special 
+		  			30 = { 
+		  				add_modifier = {
+		  					modifier = sied_fanatic_egalitarian_1
+		  					days = -1
+		  				}
+		  				set_country_flag = special_country
+		  				log = "Special egalitarian modifier 1 added"
+		  			} #Special country, utopians
+		  			10 = {
+		  				add_modifier = {
+		  					modifier = sied_fanatic_egalitarian_1r
+		  					days = -1
+		  				}
+		  				set_country_flag = special_country
+		  				set_country_flag = very_special_country
+		  				log = "Very special egalitarian modifier 1 added"
+		  			} #Very special country - extreme utopians
+		  			
+		 		}
+			}
+
+		}
+
+
+
+
+
+		
+	}
+}
+
+
+##Stellaris Improved - Primary Tension Entry Point
+event = {
+	# Entry point to yearly tension setting
+	id = si_lg_on_action.100
+	hide_window = yes
+	is_triggered_only = yes
+
+	immediate = {
+		every_country = { #Note: Every country includes guardians such as the enigmatic fortress...
+			limit = { is_ai = no }
+			#print_scope_effect = yes
+		}
+
+		every_country = {
+			limit = { is_ai = yes }
+			#print_scope_effect = yes
+		}
+		
+	}
+}

@@ -1,0 +1,14 @@
+# Triggers when the game starts
+on_game_start = {
+	events = {
+		si_lg_on_action.1
+	}
+}
+
+# No scope, like on_game_start
+on_yearly_pulse = {
+	events = {
+		si_lg_on_action.100
+	}
+}
+

@@ -1,0 +1,56 @@
+
+
+
+##########################################################################
+# SI Empire Diversification Modifiers - AI-ONLY
+# These modifiers are intended to be used to add an additional layer of difficulty
+# on AI empires at game start depending on their starting ethics / civics. Epic = very
+# low chance modifiers with potentially 
+# These are flat buffs 
+##########################################################################
+
+#Fanatic Authoritarian
+sied_fanatic_authoritarian_1 = {
+	#Purity seekers - strong focus on unity and purity - very likely to pursue bio ascention
+	tile_resource_unity_mult = 1.5
+	country_unrest_unhappy_slave_effect_mult = 0.15 #undo vanilla bonus from authoritarian mostly
+	tile_resource_society_research_mult = 0.25
+	tile_resource_energy_mult = 0.25 #lots of energy for psionic support
+}
+
+sied_fanatic_authoritarian_1r = {
+	#Purity zealots - super version of seekers
+	tile_resource_unity_mult = 2.00
+	country_unrest_unhappy_slave_effect_mult = 0.15 #undo vanilla bonus from authoritarian mostly
+	pop_happiness = 0.10 
+	#Focus on racial purity gives decent bonuses to society tech, much less empire-wide unrest
+	tile_resource_society_research_mult = 0.4
+
+	tile_resource_energy_mult = 0.40 
+	shipsize_colonizer_build_cost_mult = 0.5 #colonizing is more expensive
+	planet_colony_development_speed_mult = 1.5 #and takes longer
+
+}
+
+#Fanatic egalitarian
+sied_fanatic_egalitarian_1 = {
+	#Utopians - focus on super-happy pops, general research, individual freedoms and hedonism
+	pop_consumer_goods_mult = -0.5
+	pop_happiness = 0.10
+	faction_influence_mult = 0.25
+	all_technology_research_speed = 0.10
+	pop_growth_speed = 0.20
+}
+
+sied_fanatic_egalitarian_1r = {
+	#Extreme form of utopians.. thinking Eldar-levels of excess - great bonuses but suck at minerals
+	pop_consumer_goods_mult = -0.4
+	pop_happiness = 0.25
+	faction_influence_mult = 0.50
+	tile_resource_physics_research_mult = 0.2
+	tile_resource_society_research_mult = 0.5
+	tile_resource_engineering_research_mult = 0.1
+	pop_growth_speed = 0.25
+	tile_resource_minerals_mult = -0.2
+
+}
