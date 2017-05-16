@@ -4,11 +4,9 @@ namespace = si_lg_on_action
 #print_scope_effect
 
 ##############################
-####  YEARLY PULSES ##########
+####  GAME START ##########
 ##############################
 ##############################
-
-
 
 ##### DIVERSIFICATION SYSTEM ######
 ##Stellaris Improved - Game Start AI Empire Diversification
@@ -104,6 +102,227 @@ event = {
 		 		}
 			}
 
+			#Fanatic Xenophobes
+			if = {
+				limit = {
+					has_ethic = ethic_fanatic_xenophobe
+					NOT = {
+						has_country_flag = special_country
+					}
+				}
+
+				log = "Found a xenophobe, rolling for secondaries"
+				random_list = {
+		 			60 = { } #Normal country, nothing special 
+		 			15 = { 
+		  				add_modifier = {
+		  					modifier = sied_fanatic_xenophobe_1
+		  					days = -1
+		  				}
+		  				set_country_flag = special_country
+		  				log = "Special xenophobe modifier 1 added"
+		  			} 
+		  			15 = { 
+		  				add_modifier = {
+		  					modifier = sied_fanatic_xenophobe_2
+		  					days = -1
+		  				}
+		  				set_country_flag = special_country
+		  				log = "Special xenophobe modifier 2 added"
+		  			} 
+		  			5 = {
+		  				add_modifier = {
+		  					modifier = sied_fanatic_xenophobe_1r
+		  					days = -1
+		  				}
+		  				set_country_flag = special_country
+		  				set_country_flag = very_special_country
+		  				log = "Very special xenophobe modifier 1 added"
+		  			} 
+		  			5 = {
+		  				add_modifier = {
+		  					modifier = sied_fanatic_xenophobe_2r
+		  					days = -1
+		  				}
+		  				set_country_flag = special_country
+		  				set_country_flag = very_special_country
+		  				log = "Very special xenophobe modifier 2 added"
+		  			} 
+		  			
+		 		}
+			}
+
+			#Fanatic Xenophile
+			if = {
+				limit = {
+					has_ethic = ethic_fanatic_xenophile
+					NOT = {
+						has_country_flag = special_country
+					}
+				}
+
+				log = "Found a xenophile, rolling for secondaries"
+				random_list = {
+		 			60 = { } #Normal country, nothing special 
+		  			30 = { 
+		  				add_modifier = {
+		  					modifier = sied_fanatic_xenophile_1
+		  					days = -1
+		  				}
+		  				set_country_flag = special_country
+		  				log = "Special xenophile modifier 1 added"
+		  			} 
+		  			10 = {
+		  				add_modifier = {
+		  					modifier = sied_fanatic_xenophile_1r
+		  					days = -1
+		  				}
+		  				set_country_flag = special_country
+		  				set_country_flag = very_special_country
+		  				log = "Very special xenophile modifier 1 added"
+		  			} 
+		  			
+		 		}
+			}
+
+
+			#Fanatic Militarist
+			if = {
+				limit = {
+					has_ethic = ethic_fanatic_militarist
+					NOT = {
+						has_country_flag = special_country
+					}
+				}
+
+				log = "Found a militarist, rolling for secondaries"
+				random_list = {
+		 			60 = { } #Normal country, nothing special 
+		  			30 = { 
+		  				add_modifier = {
+		  					modifier = sied_fanatic_militarist_1
+		  					days = -1
+		  				}
+		  				set_country_flag = special_country
+		  				log = "Special militarist modifier 1 added"
+		  			} 
+		  			10 = {
+		  				add_modifier = {
+		  					modifier = sied_fanatic_militarist_1r
+		  					days = -1
+		  				}
+		  				set_country_flag = special_country
+		  				set_country_flag = very_special_country
+		  				log = "Very special militarist modifier 1 added"
+		  			} 
+		  			
+		 		}
+			}
+
+
+			#Fanatic Pacifist
+			if = {
+				limit = {
+					has_ethic = ethic_fanatic_pacifist
+					NOT = {
+						has_country_flag = special_country
+					}
+				}
+
+				log = "Found a xenophile, rolling for secondaries"
+				random_list = {
+		 			60 = { } #Normal country, nothing special 
+		  			30 = { 
+		  				add_modifier = {
+		  					modifier = sied_fanatic_pacifist_1
+		  					days = -1
+		  				}
+		  				set_country_flag = special_country
+		  				log = "Special pacifist modifier 1 added"
+		  			} 
+		  			10 = {
+		  				add_modifier = {
+		  					modifier = sied_fanatic_pacifist_1r
+		  					days = -1
+		  				}
+		  				set_country_flag = special_country
+		  				set_country_flag = very_special_country
+		  				log = "Very special pacifist modifier 1 added"
+		  			} 
+		  			
+		 		}
+			}
+
+
+			#Fanatic Materialist
+			if = {
+				limit = {
+					has_ethic = ethic_fanatic_materialist
+					NOT = {
+						has_country_flag = special_country
+					}
+				}
+
+				log = "Found a materialist, rolling for secondaries"
+				random_list = {
+		 			60 = { } #Normal country, nothing special 
+		  			30 = { 
+		  				add_modifier = {
+		  					modifier = sied_fanatic_materialist_1
+		  					days = -1
+		  				}
+		  				set_country_flag = special_country
+		  				log = "Special materialist modifier 1 added"
+		  			} 
+		  			10 = {
+		  				add_modifier = {
+		  					modifier = sied_fanatic_materialist_1r
+		  					days = -1
+		  				}
+		  				set_country_flag = special_country
+		  				set_country_flag = very_special_country
+		  				log = "Very special materialist modifier 1 added"
+		  			} 
+		  			
+		 		}
+			}
+
+
+			#Fanatic Spiritualist
+			if = {
+				limit = {
+					has_ethic = ethic_fanatic_spiritualist
+					NOT = {
+						has_country_flag = special_country
+					}
+				}
+
+				log = "Found a spiritualist, rolling for secondaries"
+				random_list = {
+		 			60 = { } #Normal country, nothing special 
+		  			30 = { 
+		  				add_modifier = {
+		  					modifier = sied_fanatic_spiritualist_1
+		  					days = -1
+		  				}
+		  				set_country_flag = special_country
+		  				log = "Special spiritualist modifier 1 added"
+		  			} 
+		  			10 = {
+		  				add_modifier = {
+		  					modifier = sied_fanatic_spiritualist_1r
+		  					days = -1
+		  				}
+		  				set_country_flag = special_country
+		  				set_country_flag = very_special_country
+		  				log = "Very special spiritualist modifier 1 added"
+		  			} 
+		  			
+		 		}
+			}
+
+
+
 		}
 
 
@@ -114,6 +333,14 @@ event = {
 	}
 }
 
+
+
+
+
+##############################
+####  YEARLY PULSES ##########
+##############################
+##############################
 
 ##Stellaris Improved - Primary Tension Entry Point
 event = {

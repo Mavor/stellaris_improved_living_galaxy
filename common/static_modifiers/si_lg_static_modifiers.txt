@@ -1,12 +1,8 @@
-
-
-
 ##########################################################################
 # SI Empire Diversification Modifiers - AI-ONLY
 # These modifiers are intended to be used to add an additional layer of difficulty
 # on AI empires at game start depending on their starting ethics / civics. Epic = very
-# low chance modifiers with potentially 
-# These are flat buffs 
+# low chance modifiers with potentially galaxy changing strength (good luck)
 ##########################################################################
 
 #Fanatic Authoritarian
@@ -14,8 +10,12 @@ sied_fanatic_authoritarian_1 = {
 	#Purity seekers - strong focus on unity and purity - very likely to pursue bio ascention
 	tile_resource_unity_mult = 1.5
 	country_unrest_unhappy_slave_effect_mult = 0.15 #undo vanilla bonus from authoritarian mostly
-	tile_resource_society_research_mult = 0.25
+	country_society_tech_research_speed = 0.25
 	tile_resource_energy_mult = 0.25 #lots of energy for psionic support
+
+	category_psionics_research_speed_mult = 0.20
+
+	edict_influence_cost = -0.15
 }
 
 sied_fanatic_authoritarian_1r = {
@@ -24,13 +24,18 @@ sied_fanatic_authoritarian_1r = {
 	country_unrest_unhappy_slave_effect_mult = 0.15 #undo vanilla bonus from authoritarian mostly
 	pop_happiness = 0.10 
 	#Focus on racial purity gives decent bonuses to society tech, much less empire-wide unrest
-	tile_resource_society_research_mult = 0.4
+	country_society_tech_research_speed = 0.4
 
 	tile_resource_energy_mult = 0.40 
 	shipsize_colonizer_build_cost_mult = 0.5 #colonizing is more expensive
 	planet_colony_development_speed_mult = 1.5 #and takes longer
 
+	category_psionics_research_speed_mult = 0.30
+
+	edict_influence_cost = -0.30
+
 }
+
 
 #Fanatic egalitarian
 sied_fanatic_egalitarian_1 = {
@@ -39,18 +44,323 @@ sied_fanatic_egalitarian_1 = {
 	pop_happiness = 0.10
 	faction_influence_mult = 0.25
 	all_technology_research_speed = 0.10
+	category_statecraft_research_speed_mult = 0.2
+	category_biology_research_speed_mult = 0.2
 	pop_growth_speed = 0.20
+
+	planet_migration_all_pull = 0.25
 }
 
 sied_fanatic_egalitarian_1r = {
 	#Extreme form of utopians.. thinking Eldar-levels of excess - great bonuses but suck at minerals
+	# - create warp storms and stuff
 	pop_consumer_goods_mult = -0.4
 	pop_happiness = 0.25
+
 	faction_influence_mult = 0.50
-	tile_resource_physics_research_mult = 0.2
-	tile_resource_society_research_mult = 0.5
-	tile_resource_engineering_research_mult = 0.1
+	all_technology_research_speed = 0.10
+	country_physics_tech_research_speed = 0.15
+	country_society_tech_research_speed = 0.4
+	country_engineering_tech_research_speed = 0.10
+
+	category_statecraft_research_speed_mult = 0.20
+	category_biology_research_speed_mult = 0.30
+	category_psionics_research_speed_mult = 0.15
+
 	pop_growth_speed = 0.25
 	tile_resource_minerals_mult = -0.2
 
+	planet_migration_all_pull = 0.35
+
+}
+
+
+#Fanatic xenophobe
+sied_fanatic_xenophobe_1 = {
+	#Inquisitorial Empire - Xenophobe ++ - empire is built to destroy xenos
+	country_resource_unity_mult = 0.50
+	ship_weapon_damage = 0.30 #Brutal weapons
+	spaceport_ship_build_speed_mult = 0.25 #Always ready to build more engines of destruction
+	army_damage_mult = 0.15
+	army_upkeep_mult = -0.10
+	country_border_mult = 0.20
+	country_engineering_tech_research_speed = 0.20 #great at non-social techs
+	country_physics_tech_research_speed = 0.20
+	country_society_tech_research_speed = -0.1
+	category_military_theory_research_speed_mult = 0.20
+
+	pop_government_ethic_attraction = 0.20
+	navy_size_mult = 0.15
+	rivalry_influence_gain = 0.25
+
+	country_trust_growth = -0.25
+}
+
+sied_fanatic_xenophobe_1r = {
+	#Purgatos Council - empire's goal in life is to protect against all outside influences - more def
+	#fanatical purifiers
+	country_resource_unity_mult = 1.00
+	ship_weapon_damage = 0.40 #Brutal weapons
+	spaceport_ship_build_speed_mult = 0.35 #Always ready to build more engines of destruction
+	army_damage_mult = 0.15
+	army_upkeep_mult = -0.15
+	country_border_mult = 0.30
+	country_engineering_tech_research_speed = 0.25 #great at non-social techs
+	country_physics_tech_research_speed = 0.25
+	country_society_tech_research_speed = -0.1
+
+	tile_resource_minerals_mult = 0.1
+	tile_resource_energy_mult = 0.1
+	pop_government_ethic_attraction = 0.50
+	navy_size_mult = 0.25
+	pop_consumer_goods_mult = -0.15
+	rivalry_influence_gain = 0.5
+	country_trust_growth = -0.65
+}
+
+sied_fanatic_xenophobe_2 = {
+	#Lonesome Observers - empire just wants to sit by itself and build tall, ignoring others
+	country_engineering_tech_research_speed = 0.45
+	country_physics_tech_research_speed = 0.45
+	country_society_tech_research_speed = 0.25
+	category_computing_research_speed_mult = 0.1
+
+	country_resource_unity_mult = 1.00
+
+	science_ship_survey_speed = 0.50
+
+	pop_happiness = 0.15
+
+	country_border_mult = -0.50
+	shipsize_colonizer_build_cost_mult = 0.5 #colonizing is more expensive
+	planet_colony_development_speed_mult = 1.5 #and takes longer
+}
+
+sied_fanatic_xenophobe_2r = {
+	#Unknown Observers - even taller, even more close-in
+	country_engineering_tech_research_speed  = 0.6
+	country_physics_tech_research_speed  = 0.6
+	country_society_tech_research_speed  = 0.3
+	category_computing_research_speed_mult = 0.15
+
+	tile_resource_minerals_mult = 0.25
+	tile_resource_energy_mult = 0.25
+
+	country_resource_unity_mult = 1.25
+
+	science_ship_survey_speed = 0.75
+
+	pop_happiness = 0.15
+
+	country_border_mult = -0.70
+	shipsize_colonizer_build_cost_mult = 0.5 #colonizing is more expensive
+	planet_colony_development_speed_mult = 2.5 #and takes longer
+}
+
+
+#Fanatic xenophile
+sied_fanatic_xenophile_1 = {
+	#Pan-Galactic Harmony - empire's focus is to unity the galaxy and achieve some sort of galactic
+	#ascension
+	pop_happiness = 0.10
+	all_technology_research_speed = 0.15
+	category_psionics_research_speed_mult = 0.20
+	category_biology_research_speed_mult =0.25
+
+	country_trade_attractiveness = 0.30
+	country_trust_growth = 0.10
+
+	ship_shield_hp_mult = 0.20
+
+	country_resettlement_cost_mult = 0.25 #not fans of moving people against their will
+
+	planet_migration_xeno_pull = 0.50
+	diplomacy_influence_cost = -0.2
+
+	navy_size_mult = 0.35
+}
+
+sied_fanatic_xenophile_1r = {
+	#Extreme version of Pan-Galactic
+	pop_happiness = 0.15
+	all_technology_research_speed = 0.20
+	category_psionics_research_speed_mult = 0.40
+	category_biology_research_speed_mult =0.50
+
+	country_trade_attractiveness = 0.40
+	country_trust_growth = 0.30
+
+	ship_shield_hp_mult = 0.20
+
+	country_resettlement_cost_mult = 0.35 #not fans of moving people against their will
+
+	planet_migration_xeno_pull = 0.75
+	diplomacy_influence_cost = -0.3
+
+	navy_size_mult = 0.4
+}
+
+
+#Fanatic Militarist
+sied_fanatic_militarist_1 = {
+	#Galactic Hegemony - basically just an empire that is better at blowing stuff up semi-honorably
+	#focus on strength, not numbers
+	country_engineering_tech_research_speed  = 0.2
+	country_physics_tech_research_speed  = 0.2
+
+	ship_fire_rate_mult = 0.15
+	ship_weapon_damage = 0.30
+	ship_hitpoints_mult = 0.15
+	ship_shield_hp_mult = 0.10
+	ship_combat_speed_mult = 0.30
+
+	country_border_mult = 0.20
+	slave_production_output = 0.2
+	slave_food_output = 0.10
+
+	influence_gain_mult = 0.20
+
+	country_trust_growth = -0.25
+
+	max_rivalries = 4
+	
+}
+
+sied_fanatic_militarist_1r = {
+	#Extreme version of galactic hegemony
+	country_engineering_tech_research_speed  = 0.25
+	country_physics_tech_research_speed  = 0.25
+
+	ship_fire_rate_mult = 0.25
+	ship_weapon_damage = 0.40
+	ship_hitpoints_mult = 0.25
+	ship_shield_hp_mult = 0.15
+	ship_combat_speed_mult = 0.30
+
+	slave_production_output = 0.25
+	slave_food_output = 0.15
+
+	country_border_mult = 0.30
+
+	influence_gain_mult = 0.40
+
+	country_trust_growth = -0.4
+
+	max_rivalries = 4
+}
+
+
+#Fanatic Pacifist
+sied_fanatic_pacifist_1 = {
+	#Precursors - peaceful guys who focus on building amazing stuff
+	megastructure_build_speed_mult = 0.50
+	mod_megastructure_build_cost_mult = -0.20
+	planet_building_build_speed_mult = 0.30
+	spaceport_ship_build_speed_mult = 0.45
+
+	all_technology_research_speed = 0.10
+	category_materials_research_speed_mult = 0.30
+	category_industry_research_speed_mult = 0.30
+	category_computing_research_speed_mult = 0.20
+	category_voidcraft_research_speed_mult = 0.15
+
+	pop_happiness = 0.10
+
+	num_tech_alternatives_add = 1
+
+	country_trade_attractiveness = 0.30
+
+	tile_resource_unity_mult = 1.0
+	tile_resource_minerals_mult = 0.1
+
+	science_ship_survey_speed = 0.25
+	
+}
+
+sied_fanatic_pacifist_1r = {
+	#Infinite Precursors - extreme version
+	megastructure_build_speed_mult = 0.60
+	mod_megastructure_build_cost_mult = -0.25
+	planet_building_build_speed_mult = 0.40
+	spaceport_ship_build_speed_mult = 0.45
+
+	all_technology_research_speed = 0.15
+	category_materials_research_speed_mult = 0.40
+	category_industry_research_speed_mult = 0.40
+	category_computing_research_speed_mult = 0.25
+	category_voidcraft_research_speed_mult = 0.2
+
+	pop_happiness = 0.10
+
+	num_tech_alternatives_add = 2
+
+	country_trade_attractiveness = 0.35
+
+	tile_resource_unity_mult = 1.2
+	tile_resource_minerals_mult = 0.2
+
+	science_ship_survey_speed = 0.25
+	pop_growth_speed = -0.10
+	
+}
+
+
+#Fanatic Materialist
+sied_fanatic_materialist_1 = {
+	#Singularians - heavy robot/tech focused with a side of mega structures
+	megastructure_build_speed_mult = 0.20
+	mod_megastructure_build_cost_mult = -0.10
+
+	all_technology_research_speed = 0.10
+	country_engineering_tech_research_speed  = 0.2
+	country_physics_tech_research_speed  = 0.3
+	country_society_tech_research_speed  = 0.1
+	
+	category_computing_research_speed_mult = 0.30
+
+	num_tech_alternatives_add = 1
+
+
+	tile_resource_unity_mult = 0.5
+
+	pop_robot_production_output = 0.15
+	country_robot_maintenance_mult = -0.15
+    country_robot_build_speed_mult = 0.25
+	
+}
+
+sied_fanatic_materialist_1r = {
+	#Fanatic Singularians - extreme version
+	megastructure_build_speed_mult = 0.20
+	mod_megastructure_build_cost_mult = -0.10
+
+	all_technology_research_speed = 0.15
+	country_engineering_tech_research_speed  = 0.3
+	country_physics_tech_research_speed  = 0.4
+	country_society_tech_research_speed  = 0.15
+	
+	category_computing_research_speed_mult = 0.30
+
+	num_tech_alternatives_add = 2
+
+
+	tile_resource_unity_mult = 1.0
+
+	pop_robot_production_output = 0.25
+	country_robot_maintenance_mult = -0.2
+    country_robot_build_speed_mult = 0.5
+}
+
+
+#Fanatic Spiritualist
+sied_fanatic_spiritualist_1 = {
+	#Singularians - heavy robot/tech focused with a side of mega structures
+	
+	
+}
+
+sied_fanatic_spiritualist_1r = {
+	#Infinite Precursors - extreme version
+	
+	
 }
