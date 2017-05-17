@@ -12,12 +12,20 @@ namespace = si_lg_on_action
 ##Stellaris Improved - Game Start AI Empire Diversification
 ##Fanatics have very focused modifiers. Non-fanatics get more general buffs
 event = {
-	# Entry point to yearly tension setting
+	# Entry point to game start diversification settings
 	id = si_lg_on_action.1
 	hide_window = yes
 	is_triggered_only = yes
 
 	immediate = {
+
+		##TESTING
+		set_global_average_power_tiers = yes
+
+		##
+
+
+
 		every_country = { #Note: Every country includes guardians such as the enigmatic fortress...
 			limit = { is_ai = no }
 			#Settings for player diversification, if we need them

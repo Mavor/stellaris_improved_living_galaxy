@@ -10,10 +10,9 @@ sied_fanatic_authoritarian_1 = {
 	#Purity seekers - strong focus on unity and purity - very likely to pursue bio ascention
 	country_resource_unity_mult = 1.5
 	country_unrest_unhappy_slave_effect_mult = 0.15 #undo vanilla bonus from authoritarian mostly
-	country_society_tech_research_speed = 0.25
+	country_society_tech_research_speed = 0.3
 	tile_resource_energy_mult = 0.25 #lots of energy for psionic support
 	tile_resource_minerals_mult = 0.1 
-	category_psionics_research_speed_mult = 0.20
 
 	edict_influence_cost = -0.15
 }
@@ -24,14 +23,13 @@ sied_fanatic_authoritarian_1r = {
 	country_unrest_unhappy_slave_effect_mult = 0.15 #undo vanilla bonus from authoritarian mostly
 	pop_happiness = 0.10 
 	#Focus on racial purity gives decent bonuses to society tech, much less empire-wide unrest
-	country_society_tech_research_speed = 0.4
+	country_society_tech_research_speed = 0.45
 
 	tile_resource_minerals_mult = 0.15 
 	tile_resource_energy_mult = 0.40 
 	shipsize_colonizer_build_cost_mult = 0.5 #colonizing is more expensive
 	planet_colony_development_speed_mult = 1.5 #and takes longer
 
-	category_psionics_research_speed_mult = 0.30
 
 	edict_influence_cost = -0.30
 
@@ -44,9 +42,7 @@ sied_fanatic_egalitarian_1 = {
 	pop_consumer_goods_mult = -0.5
 	pop_happiness = 0.10
 	faction_influence_mult = 0.25
-	all_technology_research_speed = 0.10
-	category_statecraft_research_speed_mult = 0.2
-	category_biology_research_speed_mult = 0.2
+	all_technology_research_speed = 0.15
 	pop_growth_speed = 0.20
 
 	planet_migration_all_pull = 0.25
@@ -61,12 +57,10 @@ sied_fanatic_egalitarian_1r = {
 	faction_influence_mult = 0.50
 	all_technology_research_speed = 0.10
 	country_physics_tech_research_speed = 0.15
-	country_society_tech_research_speed = 0.4
+	country_society_tech_research_speed = 0.5
 	country_engineering_tech_research_speed = 0.10
 
-	category_statecraft_research_speed_mult = 0.20
-	category_biology_research_speed_mult = 0.30
-	category_psionics_research_speed_mult = 0.15
+	
 
 	pop_growth_speed = 0.25
 	tile_resource_minerals_mult = -0.2
@@ -87,8 +81,6 @@ sied_fanatic_xenophobe_1 = {
 	country_border_mult = 0.20
 	country_engineering_tech_research_speed = 0.20 #great at non-social techs
 	country_physics_tech_research_speed = 0.20
-	country_society_tech_research_speed = -0.1
-	category_military_theory_research_speed_mult = 0.20
 
 	pop_government_ethic_attraction = 0.20
 	navy_size_mult = 0.15
@@ -124,7 +116,6 @@ sied_fanatic_xenophobe_2 = {
 	country_engineering_tech_research_speed = 0.45
 	country_physics_tech_research_speed = 0.45
 	country_society_tech_research_speed = 0.25
-	category_computing_research_speed_mult = 0.1
 
 	country_resource_unity_mult = 1.00
 
@@ -142,7 +133,6 @@ sied_fanatic_xenophobe_2r = {
 	country_engineering_tech_research_speed  = 0.6
 	country_physics_tech_research_speed  = 0.6
 	country_society_tech_research_speed  = 0.3
-	category_computing_research_speed_mult = 0.15
 
 	tile_resource_minerals_mult = 0.25
 	tile_resource_energy_mult = 0.25
@@ -165,8 +155,7 @@ sied_fanatic_xenophile_1 = {
 	#ascension
 	pop_happiness = 0.10
 	all_technology_research_speed = 0.15
-	category_psionics_research_speed_mult = 0.20
-	category_biology_research_speed_mult =0.25
+	country_society_tech_research_speed  = 0.1
 
 	country_trade_attractiveness = 0.30
 	country_trust_growth = 0.10
@@ -184,9 +173,8 @@ sied_fanatic_xenophile_1 = {
 sied_fanatic_xenophile_1r = {
 	#Extreme version of Pan-Galactic
 	pop_happiness = 0.15
-	all_technology_research_speed = 0.20
-	category_psionics_research_speed_mult = 0.40
-	category_biology_research_speed_mult =0.50
+	all_technology_research_speed = 0.25
+	country_society_tech_research_speed  = 0.15
 
 	country_trade_attractiveness = 0.40
 	country_trust_growth = 0.30
@@ -219,7 +207,7 @@ sied_fanatic_militarist_1 = {
 	slave_production_output = 0.2
 	slave_food_output = 0.10
 
-	influence_gain_mult = 0.20
+	rivalry_influence_gain = 0.15
 
 	country_trust_growth = -0.25
 
@@ -243,7 +231,7 @@ sied_fanatic_militarist_1r = {
 
 	country_border_mult = 0.30
 
-	influence_gain_mult = 0.40
+	rivalry_influence_gain = 0.25
 
 	country_trust_growth = -0.4
 
@@ -259,11 +247,8 @@ sied_fanatic_pacifist_1 = {
 	planet_building_build_speed_mult = 0.30
 	spaceport_ship_build_speed_mult = 0.45
 
-	all_technology_research_speed = 0.10
-	category_materials_research_speed_mult = 0.30
-	category_industry_research_speed_mult = 0.30
-	category_computing_research_speed_mult = 0.20
-	category_voidcraft_research_speed_mult = 0.15
+	all_technology_research_speed = 0.15
+	country_engineering_tech_research_speed  = 0.15
 
 	pop_happiness = 0.10
 
@@ -285,11 +270,8 @@ sied_fanatic_pacifist_1r = {
 	planet_building_build_speed_mult = 0.40
 	spaceport_ship_build_speed_mult = 0.45
 
-	all_technology_research_speed = 0.15
-	category_materials_research_speed_mult = 0.40
-	category_industry_research_speed_mult = 0.40
-	category_computing_research_speed_mult = 0.25
-	category_voidcraft_research_speed_mult = 0.2
+	all_technology_research_speed = 0.2
+	country_engineering_tech_research_speed  = 0.2
 
 	pop_happiness = 0.10
 
@@ -314,10 +296,9 @@ sied_fanatic_materialist_1 = {
 
 	all_technology_research_speed = 0.10
 	country_engineering_tech_research_speed  = 0.2
-	country_physics_tech_research_speed  = 0.3
+	country_physics_tech_research_speed  = 0.35
 	country_society_tech_research_speed  = 0.1
 	
-	category_computing_research_speed_mult = 0.30
 
 	num_tech_alternatives_add = 1
 
@@ -337,10 +318,9 @@ sied_fanatic_materialist_1r = {
 
 	all_technology_research_speed = 0.15
 	country_engineering_tech_research_speed  = 0.3
-	country_physics_tech_research_speed  = 0.4
+	country_physics_tech_research_speed  = 0.45
 	country_society_tech_research_speed  = 0.15
 	
-	category_computing_research_speed_mult = 0.30
 
 	num_tech_alternatives_add = 2
 
@@ -358,10 +338,7 @@ sied_fanatic_spiritualist_1 = {
 	#Psionic Deviants - Lower ethics attraction but basically latent psionics from the get-go and 
 	#strong tech research and some biological buffs
 	country_physics_tech_research_speed  = 0.25
-	country_society_tech_research_speed  = 0.2
-	category_psionics_research_speed_mult = 0.2
-	category_statecraft_research_speed_mult = 0.1
-	category_biology_research_speed_mult =0.15
+	country_society_tech_research_speed  = 0.3
 
 	science_ship_survey_speed = 0.25
 
@@ -380,10 +357,7 @@ sied_fanatic_spiritualist_1 = {
 sied_fanatic_spiritualist_1r = {
 	#Extreme version
 	country_physics_tech_research_speed  = 0.4
-	country_society_tech_research_speed  = 0.3
-	category_psionics_research_speed_mult = 0.4
-	category_statecraft_research_speed_mult = 0.2
-	category_biology_research_speed_mult =0.3
+	country_society_tech_research_speed  = 0.4
 
 	science_ship_survey_speed = 0.5
 

@@ -22,21 +22,40 @@ set_global_average_power_tiers = {
 	#set_global_flag = war_in_heaven_ended
 	#has_global_flag = war_in_heaven_ended
 	#Reset global variables to 0
+	random_country = {
+		#galaxy wide pop count - note, random_country used to scope to something supported - hack but w/e
+		#ALWAYS updated 
+		update_total_pop_num = yes
 
-	set_variable = {
-			which = galaxy_wide_tech_tier
-			value = 0
-	}
+		if = {
+			limit = {
+				check_variable = { 
+					which = "galaxy_wide_tech_tier" 
+					value > 0
+		 		}
+		 	}
 
-	set_variable = {
-			which = galaxy_wide_fleetpower_tier
-			value = 0
-	}
+		 	set_variable = {
+				which = "galaxy_wide_tech_tier"
+				value = 0
+			}
 
-	set_variable = {
-		which = galaxy_wide_pop_strength
-		value = 0
+			set_variable = {
+					which = "galaxy_wide_fleetpower_tier"
+					value = 0
+			}
+
+			set_variable = {
+				which = "galaxy_wide_pop_strength"
+				value = 0
+			}
+
+
+		}
 	}
+	
+	
+	
 
 
 	
@@ -47,14 +66,13 @@ set_global_average_power_tiers = {
 			is_country_type = default
 		}
 		
+		log = "Found a default country, doing updates"
 		#Update this country's tier and add strengths to the global trackers
 		#NOTE: 
 
-		#galaxy wide pop count
-		update_total_pop_num = yes
 		update_country_engineering_tech_tier = yes
-		update_country_society_tech_tier = yes
-		update_country_physics_tech_tier = yes
+		#update_country_society_tech_tier = yes
+		#update_country_physics_tech_tier = yes
 
 		#update tech
 		#fleet power
@@ -106,36 +124,164 @@ update_ai_tension_indicator = {
 
 update_total_pop_num = {
 	log = "Updating total number of pops for this country"
-	every_pop = {
-		change_variable = {
-			which = galaxy_wide_pop_strength
-			value = 1
+	every_planet ={
+		if = {
+
+			limit = {
+				AND = {
+					count_pops = {
+						count > 3
+					}
+					count_pops = {
+						count < 9
+					}
+				}
+				
+			}
+
+			change_variable = {
+				which = "galaxy_wide_pop_strength"
+				value = 5
+			}
+			log = "Found a greater than 3 planet"
+			
 		}
+
+		if = {
+			limit = {
+				AND = {
+					count_pops = {
+						count > 8
+					}
+					count_pops = {
+						count < 11
+					}
+				}
+			}
+
+			change_variable = {
+				which = "galaxy_wide_pop_strength"
+				value = 10
+			}
+		}
+
+		if = {
+			limit = {
+				AND = {
+					count_pops = {
+						count > 10
+					}
+					count_pops = {
+						count < 15
+					}
+				}
+			}
+
+			change_variable = {
+				which = "galaxy_wide_pop_strength"
+				value = 15
+			}
+		}
+
+		if = {
+			limit = {
+				AND = {
+					count_pops = {
+						count > 14
+					}
+					count_pops = {
+						count < 18
+					}
+				}
+			}
+
+			change_variable = {
+				which = "galaxy_wide_pop_strength"
+				value = 18
+			}
+		}
+
+		if = {
+			limit = {
+				AND = {
+					count_pops = {
+						count > 17
+					}
+					count_pops = {
+						count < 22
+					}
+				}
+			}
+
+			change_variable = {
+				which = "galaxy_wide_pop_strength"
+				value = 23
+			}
+		}
+
+		if = {
+			limit = {
+				AND = {
+					count_pops = {
+						count > 21
+					}
+					count_pops = {
+						count < 24
+					}
+				}
+			}
+
+			change_variable = {
+				which = "galaxy_wide_pop_strength"
+				value = 26
+			}
+		}
+
+		if = {
+			limit = {
+				count_pops = {
+					count > 23
+				}
+			}
+
+			change_variable = {
+				which = "galaxy_wide_pop_strength"
+				value = 30
+			}
+		}
+			
+			
+		
 	}
+	
 }
 
-
+##TECH CHECKERS NEED TO BE REWRITTEN TO USE "HAS_TECHNLOGY" - Engineering research is bust
 update_country_engineering_tech_tier = {
 	
+	log = "Entered Engineering Tech tier checker"
+
 	#tier 0
 	if = {
 		limit = {
-			AND = {
+			#AND = {
 				has_monthly_income = {
-					resource = engineering_research
+					resource = minerals
 					value > 0
 				}
-				has_monthly_income = {
-					resource = engineering_research
-					value < 16
-				}
-			}
+				
+			#}
+
+			#has_monthly_income = {
+				#	resource = engineering_research
+				#	value < 16
+				#}
 			
 		}
 		log = "Empire found with Grade 0 Engineering Tech: [This.GetName]"
 		set_country_flag = tier_0_engineering_strength 
 		change_variable = {
-			which = galaxy_wide_tech_tier
+			which = "galaxy_wide_tech_tier"
 			value = 0
 		}
 		
@@ -159,7 +305,7 @@ update_country_engineering_tech_tier = {
 		log = "Empire found with Grade 1 Engineering Tech: [This.GetName]"
 		set_country_flag = tier_1_engineering_strength 
 		change_variable = {
-			which = galaxy_wide_tech_tier
+			which = "galaxy_wide_tech_tier"
 			value = 1
 		}
 		
@@ -183,7 +329,7 @@ update_country_engineering_tech_tier = {
 		log = "Empire found with Grade 2 Engineering Tech: [This.GetName]"
 		set_country_flag = tier_2_engineering_strength 
 		change_variable = {
-			which = galaxy_wide_tech_tier
+			which = "galaxy_wide_tech_tier"
 			value = 2
 		}
 		
@@ -207,7 +353,7 @@ update_country_engineering_tech_tier = {
 		log = "Empire found with Grade 3 Engineering Tech: [This.GetName]"
 		set_country_flag = tier_3_engineering_strength 
 		change_variable = {
-			which = galaxy_wide_tech_tier
+			which = "galaxy_wide_tech_tier"
 			value = 3
 		}
 		
@@ -231,7 +377,7 @@ update_country_engineering_tech_tier = {
 		log = "Empire found with Grade 4 Engineering Tech: [This.GetName]"
 		set_country_flag = tier_4_engineering_strength 
 		change_variable = {
-			which = galaxy_wide_tech_tier
+			which = "galaxy_wide_tech_tier"
 			value = 5
 		}
 		
@@ -256,7 +402,7 @@ update_country_engineering_tech_tier = {
 		log = "Empire found with Grade 5 Engineering Tech: [This.GetName]"
 		set_country_flag = tier_5_engineering_strength 
 		change_variable = {
-			which = galaxy_wide_tech_tier
+			which = "galaxy_wide_tech_tier"
 			value = 7
 		}
 		
@@ -280,7 +426,7 @@ update_country_engineering_tech_tier = {
 		log = "Empire found with Grade 6 Engineering Tech: [This.GetName]"
 		set_country_flag = tier_6_engineering_strength 
 		change_variable = {
-			which = galaxy_wide_tech_tier
+			which = "galaxy_wide_tech_tier"
 			value = 9
 		}
 		
@@ -299,7 +445,7 @@ update_country_engineering_tech_tier = {
 		log = "Empire found with Grade 7 Engineering Tech: [This.GetName]"
 		set_country_flag = tier_7_engineering_strength 
 		change_variable = {
-			which = galaxy_wide_tech_tier
+			which = "galaxy_wide_tech_tier"
 			value = 12
 		}
 		
@@ -331,7 +477,7 @@ update_country_society_tech_tier = {
 		log = "Empire found with Grade 0 society Tech: [This.GetName]"
 		set_country_flag = tier_0_society_strength 
 		change_variable = {
-			which = galaxy_wide_tech_tier
+			which = "galaxy_wide_tech_tier"
 			value = 0
 		}
 		
@@ -355,7 +501,7 @@ update_country_society_tech_tier = {
 		log = "Empire found with Grade 1 society Tech: [This.GetName]"
 		set_country_flag = tier_1_society_strength 
 		change_variable = {
-			which = galaxy_wide_tech_tier
+			which = "galaxy_wide_tech_tier"
 			value = 1
 		}
 		
@@ -379,7 +525,7 @@ update_country_society_tech_tier = {
 		log = "Empire found with Grade 2 society Tech: [This.GetName]"
 		set_country_flag = tier_2_society_strength 
 		change_variable = {
-			which = galaxy_wide_tech_tier
+			which = "galaxy_wide_tech_tier"
 			value = 2
 		}
 		
@@ -403,7 +549,7 @@ update_country_society_tech_tier = {
 		log = "Empire found with Grade 3 society Tech: [This.GetName]"
 		set_country_flag = tier_3_society_strength 
 		change_variable = {
-			which = galaxy_wide_tech_tier
+			which = "galaxy_wide_tech_tier"
 			value = 3
 		}
 		
@@ -427,7 +573,7 @@ update_country_society_tech_tier = {
 		log = "Empire found with Grade 4 society Tech: [This.GetName]"
 		set_country_flag = tier_4_society_strength 
 		change_variable = {
-			which = galaxy_wide_tech_tier
+			which = "galaxy_wide_tech_tier"
 			value = 5
 		}
 		
@@ -452,7 +598,7 @@ update_country_society_tech_tier = {
 		log = "Empire found with Grade 5 society Tech: [This.GetName]"
 		set_country_flag = tier_5_society_strength 
 		change_variable = {
-			which = galaxy_wide_tech_tier
+			which = "galaxy_wide_tech_tier"
 			value = 7
 		}
 		
@@ -476,7 +622,7 @@ update_country_society_tech_tier = {
 		log = "Empire found with Grade 6 society Tech: [This.GetName]"
 		set_country_flag = tier_6_society_strength 
 		change_variable = {
-			which = galaxy_wide_tech_tier
+			which = "galaxy_wide_tech_tier"
 			value = 9
 		}
 		
@@ -495,7 +641,7 @@ update_country_society_tech_tier = {
 		log = "Empire found with Grade 7 society Tech: [This.GetName]"
 		set_country_flag = tier_7_society_strength 
 		change_variable = {
-			which = galaxy_wide_tech_tier
+			which = "galaxy_wide_tech_tier"
 			value = 12
 		}
 		
@@ -528,7 +674,7 @@ update_country_physics_tech_tier = {
 		log = "Empire found with Grade 0 physics Tech: [This.GetName]"
 		set_country_flag = tier_0_physics_strength 
 		change_variable = {
-			which = galaxy_wide_tech_tier
+			which = "galaxy_wide_tech_tier"
 			value = 0
 		}
 		
@@ -552,7 +698,7 @@ update_country_physics_tech_tier = {
 		log = "Empire found with Grade 1 physics Tech: [This.GetName]"
 		set_country_flag = tier_1_physics_strength 
 		change_variable = {
-			which = galaxy_wide_tech_tier
+			which = "galaxy_wide_tech_tier"
 			value = 1
 		}
 		
@@ -576,7 +722,7 @@ update_country_physics_tech_tier = {
 		log = "Empire found with Grade 2 physics Tech: [This.GetName]"
 		set_country_flag = tier_2_physics_strength 
 		change_variable = {
-			which = galaxy_wide_tech_tier
+			which = "galaxy_wide_tech_tier"
 			value = 2
 		}
 		
@@ -600,7 +746,7 @@ update_country_physics_tech_tier = {
 		log = "Empire found with Grade 3 physics Tech: [This.GetName]"
 		set_country_flag = tier_3_physics_strength 
 		change_variable = {
-			which = galaxy_wide_tech_tier
+			which = "galaxy_wide_tech_tier"
 			value = 3
 		}
 		
@@ -624,7 +770,7 @@ update_country_physics_tech_tier = {
 		log = "Empire found with Grade 4 physics Tech: [This.GetName]"
 		set_country_flag = tier_4_physics_strength 
 		change_variable = {
-			which = galaxy_wide_tech_tier
+			which = "galaxy_wide_tech_tier"
 			value = 5
 		}
 		
@@ -649,7 +795,7 @@ update_country_physics_tech_tier = {
 		log = "Empire found with Grade 5 physics Tech: [This.GetName]"
 		set_country_flag = tier_5_physics_strength 
 		change_variable = {
-			which = galaxy_wide_tech_tier
+			which = "galaxy_wide_tech_tier"
 			value = 7
 		}
 		
@@ -673,7 +819,7 @@ update_country_physics_tech_tier = {
 		log = "Empire found with Grade 6 physics Tech: [This.GetName]"
 		set_country_flag = tier_6_physics_strength 
 		change_variable = {
-			which = galaxy_wide_tech_tier
+			which = "galaxy_wide_tech_tier"
 			value = 9
 		}
 		
@@ -692,7 +838,7 @@ update_country_physics_tech_tier = {
 		log = "Empire found with Grade 7 physics Tech: [This.GetName]"
 		set_country_flag = tier_7_physics_strength 
 		change_variable = {
-			which = galaxy_wide_tech_tier
+			which = "galaxy_wide_tech_tier"
 			value = 12
 		}
 		
@@ -715,7 +861,7 @@ find_num_normal_empires = {
 		}
 
 		change_variable = {
-			which = num_normal_empires
+			which = "num_normal_empires"
 			value = 1
 		}
 		log = "Found default empire, current num is: [num_normal_empires]"
