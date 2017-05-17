@@ -353,6 +353,7 @@ event = {
 		every_country = { #Note: Every country includes guardians such as the enigmatic fortress...
 			limit = { is_ai = no }
 			#print_scope_effect = yes
+			#Not AI - Tension is calculated differently
 		}
 
 		every_country = {
