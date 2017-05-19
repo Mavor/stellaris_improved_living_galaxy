@@ -19,19 +19,25 @@ event = {
 
 	immediate = {
 
+		random_country = { #Note: Every country includes guardians such as the enigmatic fortress...
+			limit = { is_ai = no }
+			#Settings for player diversification, if we need them
+			#print_scope_effect = yes
+			#Use this random player country as a "global scope" holder, since there is no global scope object
+			save_global_event_target_as = global_scope_stand_in
+		}
+
+		every_country = { 
+			limit = { is_ai = no }
+			#Anything needed to be done on players at game start goes here
+		}
+
 		##TESTING
 		set_global_average_power_tiers = yes
 		find_num_normal_empires = yes #Should only need to be done once
 		##
 
-
-
-		every_country = { #Note: Every country includes guardians such as the enigmatic fortress...
-			limit = { is_ai = no }
-			#Settings for player diversification, if we need them
-			#print_scope_effect = yes
-		}
-
+		#Set up some AI's to be more powerful than others (lucky countries with more flavor)
 		every_country = {
 			limit = { 
 				AND = {

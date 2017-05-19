@@ -21,31 +21,41 @@ set_global_average_power_tiers = {
 
 	#set_global_flag = war_in_heaven_ended
 	#has_global_flag = war_in_heaven_ended
-	#Reset global variables to 0
-	random_country = {
+
+	#Need to re-code this to set global tier flags 
+	#Note: Variables are local to the scope they are set in
+	every_country = {
+		print_scope_effect = yes
 
 		if = {
 			limit = {
-				check_variable = { 
-					which = "galaxy_wide_tech_tier" 
-					value > 0
-		 		}
-		 	}
-
-		 	set_variable = {
-				which = "galaxy_wide_tech_tier"
-				value = 0
+				root = event_target:global_scope_stand_in
 			}
 
-			set_variable = {
+			if = {
+				limit = {
+				check_variable = { 
+						which = "galaxy_wide_tech_tier" 
+						value > 0
+			 		}
+			 	}
+
+			 	set_variable = {
+					which = "galaxy_wide_tech_tier"
+					value = 0
+				}
+
+				set_variable = {
 					which = "galaxy_wide_fleetpower"
 					value = 0
-			}
+				}
 
-			set_variable = {
-				which = "galaxy_wide_pop_strength"
-				value = 0
+				set_variable = {
+					which = "galaxy_wide_pop_strength"
+					value = 0
+				}
 			}
+			
 
 
 		}
@@ -70,17 +80,25 @@ set_global_average_power_tiers = {
 
 		#Update this country's tier and add strengths to the global trackers
 		update_total_pop_num = yes
-
 		update_country_tech_tier = yes
-
 		update_country_fleet_power = yes
 		
+
+
 	}
 
-	#Global mineral power = sum of all mineral tiers (1-10+) where 7+ should be FE+
-	#Global tech/fleet power same
-	#Global galaxy strength = sum of all mineral + tech + fleet grades of all empires (~100+)
-	#Note, one point of strength roughly equal to 100 minerals / month
+	#Galaxy strengths should have been populated by now..
+	random_country = {
+		limit = {
+				root = event_target:global_scope_stand_in
+			}
+		log = "TEST - Fleet Power Galaxy Wide: [This.galaxy_wide_fleetpower]"
+	}
+	
+
+
+
+
 
 
 }
@@ -158,10 +176,16 @@ update_total_pop_num = {
 				
 			}
 
-			change_variable = {
-				which = "galaxy_wide_pop_strength"
-				value = 5
+			every_country = {
+				limit = {
+					root = event_target:global_scope_stand_in
+				}
+				change_variable = {
+					which = "galaxy_wide_pop_strength"
+					value = 5
+				}
 			}
+			
 			change_variable = {
 				which = "temp_country_wide_pop_strength"
 				value = 5
@@ -182,9 +206,14 @@ update_total_pop_num = {
 				}
 			}
 
-			change_variable = {
-				which = "galaxy_wide_pop_strength"
-				value = 10
+			every_country = {
+				limit = {
+					root = event_target:global_scope_stand_in
+				}
+					change_variable = {
+						which = "galaxy_wide_pop_strength"
+						value = 10
+					}
 			}
 			change_variable = {
 				which = "temp_country_wide_pop_strength"
@@ -204,9 +233,14 @@ update_total_pop_num = {
 				}
 			}
 
-			change_variable = {
-				which = "galaxy_wide_pop_strength"
-				value = 15
+			every_country = {
+				limit = {
+					root = event_target:global_scope_stand_in
+				}
+				change_variable = {
+					which = "galaxy_wide_pop_strength"
+					value = 15
+				}
 			}
 			change_variable = {
 				which = "temp_country_wide_pop_strength"
@@ -226,9 +260,14 @@ update_total_pop_num = {
 				}
 			}
 
-			change_variable = {
-				which = "galaxy_wide_pop_strength"
-				value = 18
+			every_country = {
+				limit = {
+					root = event_target:global_scope_stand_in
+				}
+				change_variable = {
+					which = "galaxy_wide_pop_strength"
+					value = 18
+				}
 			}
 			change_variable = {
 				which = "temp_country_wide_pop_strength"
@@ -248,9 +287,14 @@ update_total_pop_num = {
 				}
 			}
 
-			change_variable = {
-				which = "galaxy_wide_pop_strength"
-				value = 23
+			every_country = {
+				limit = {
+					root = event_target:global_scope_stand_in
+				}
+				change_variable = {
+					which = "galaxy_wide_pop_strength"
+					value = 23
+				}
 			}
 			change_variable = {
 				which = "temp_country_wide_pop_strength"
@@ -270,9 +314,14 @@ update_total_pop_num = {
 				}
 			}
 
-			change_variable = {
-				which = "galaxy_wide_pop_strength"
-				value = 26
+			every_country = {
+				limit = {
+					root = event_target:global_scope_stand_in
+				}
+				change_variable = {
+					which = "galaxy_wide_pop_strength"
+					value = 26
+				}
 			}
 			change_variable = {
 				which = "temp_country_wide_pop_strength"
@@ -287,9 +336,14 @@ update_total_pop_num = {
 				}
 			}
 
-			change_variable = {
-				which = "galaxy_wide_pop_strength"
-				value = 30
+			every_country = {
+				limit = {
+					root = event_target:global_scope_stand_in
+				}
+				change_variable = {
+					which = "galaxy_wide_pop_strength"
+					value = 30
+				}
 			}
 			change_variable = {
 				which = "temp_country_wide_pop_strength"
@@ -476,9 +530,15 @@ update_country_tech_tier = {
 		log = "Empire found with Grade 0 Engineering Tech: [This.GetName]"
 		set_country_flag = tier_0_tech_strength 
 		set_country_flag = temp_blocker_tech
-		change_variable = {
-			which = "galaxy_wide_tech_tier"
-			value = 5
+
+		every_country = {
+				limit = {
+					root = event_target:global_scope_stand_in
+				}
+			change_variable = {
+				which = "galaxy_wide_tech_tier"
+				value = 5
+			}
 		}
 		
 	}
@@ -503,9 +563,15 @@ update_country_tech_tier = {
 		log = "Empire found with Grade 1 Engineering Tech: [This.GetName]"
 		set_country_flag = tier_1_tech_strength 
 		set_country_flag = temp_blocker_tech
-		change_variable = {
-			which = "galaxy_wide_tech_tier"
-			value = 15
+
+		every_country = {
+				limit = {
+					root = event_target:global_scope_stand_in
+				}
+			change_variable = {
+				which = "galaxy_wide_tech_tier"
+				value = 15
+			}
 		}
 		
 	}
@@ -527,9 +593,14 @@ update_country_tech_tier = {
 		log = "Empire found with Grade 2 Engineering Tech: [This.GetName]"
 		set_country_flag = tier_2_tech_strength 
 		set_country_flag = temp_blocker_tech 
-		change_variable = {
-			which = "galaxy_wide_tech_tier"
-			value = 30
+		every_country = {
+				limit = {
+					root = event_target:global_scope_stand_in
+				}
+			change_variable = {
+				which = "galaxy_wide_tech_tier"
+				value = 30
+			}
 		}
 		
 	}
@@ -554,9 +625,15 @@ update_country_tech_tier = {
 		log = "Empire found with Grade 3 Engineering Tech: [This.GetName]"
 		set_country_flag = tier_3_tech_strength 
 		set_country_flag = temp_blocker_tech 
-		change_variable = {
-			which = "galaxy_wide_tech_tier"
-			value = 70
+
+		every_country = {
+				limit = {
+					root = event_target:global_scope_stand_in
+				}
+			change_variable = {
+				which = "galaxy_wide_tech_tier"
+				value = 70
+			}
 		}
 		
 	}
@@ -577,10 +654,16 @@ update_country_tech_tier = {
 		}
 		log = "Empire found with Grade 4 Engineering Tech: [This.GetName]"
 		set_country_flag = tier_4_tech_strength 
-		set_country_flag = temp_blocker_tech  
-		change_variable = {
-			which = "galaxy_wide_tech_tier"
-			value = 110
+		set_country_flag = temp_blocker_tech
+
+		every_country = {
+				limit = {
+					root = event_target:global_scope_stand_in
+				}  
+			change_variable = {
+				which = "galaxy_wide_tech_tier"
+				value = 110
+			}
 		}
 		
 	}
@@ -606,9 +689,15 @@ update_country_tech_tier = {
 		log = "Empire found with Grade 5 Engineering Tech: [This.GetName]"
 		set_country_flag = tier_5_tech_strength 
 		set_country_flag = temp_blocker_tech  
-		change_variable = {
-			which = "galaxy_wide_tech_tier"
-			value = 140
+
+		every_country = {
+				limit = {
+					root = event_target:global_scope_stand_in
+				}
+			change_variable = {
+				which = "galaxy_wide_tech_tier"
+				value = 140
+			}
 		}
 		
 	}
@@ -629,10 +718,16 @@ update_country_tech_tier = {
 		}
 		log = "Empire found with Grade 6 Engineering Tech: [This.GetName]"
 		set_country_flag = tier_6_tech_strength
-		set_country_flag = temp_blocker_tech  
-		change_variable = {
-			which = "galaxy_wide_tech_tier"
-			value = 180
+		set_country_flag = temp_blocker_tech 
+
+		every_country = {
+				limit = {
+					root = event_target:global_scope_stand_in
+				} 
+			change_variable = {
+				which = "galaxy_wide_tech_tier"
+				value = 180
+			}
 		}
 		
 	}
@@ -659,9 +754,15 @@ update_country_tech_tier = {
 		log = "Empire found with Grade 7 Engineering Tech: [This.GetName]"
 		set_country_flag = tier_7_tech_strength
 		set_country_flag = temp_blocker_tech 
-		change_variable = {
-			which = "galaxy_wide_tech_tier"
-			value = 240
+
+		every_country = {
+				limit = {
+					root = event_target:global_scope_stand_in
+				}
+			change_variable = {
+				which = "galaxy_wide_tech_tier"
+				value = 240
+			}
 		}
 		
 	}
@@ -687,9 +788,15 @@ update_country_fleet_power = {
 		}
 		log = "Empire found with Tier 0 Fleet Power: [This.GetName]"
 		set_country_flag = tier_0_fleet_power
-		change_variable = {
-			which = "galaxy_wide_fleetpower"
-			value = 20
+
+		every_country = {
+				limit = {
+					root = event_target:global_scope_stand_in
+				}
+			change_variable = {
+				which = "galaxy_wide_fleetpower"
+				value = 20
+			}
 		}
 		
 	}
@@ -705,9 +812,15 @@ update_country_fleet_power = {
 		}
 		log = "Empire found with Tier 1 Fleet Power: [This.GetName]"
 		set_country_flag = tier_1_fleet_power
-		change_variable = {
-			which = "galaxy_wide_fleetpower"
-			value = 40
+
+		every_country = {
+				limit = {
+					root = event_target:global_scope_stand_in
+				}
+			change_variable = {
+				which = "galaxy_wide_fleetpower"
+				value = 40
+			}
 		}
 		
 	}
@@ -723,9 +836,15 @@ update_country_fleet_power = {
 		}
 		log = "Empire found with Tier 2 Fleet Power: [This.GetName]"
 		set_country_flag = tier_2_fleet_power
-		change_variable = {
-			which = "galaxy_wide_fleetpower"
-			value = 60
+
+		every_country = {
+				limit = {
+					root = event_target:global_scope_stand_in
+				}
+			change_variable = {
+				which = "galaxy_wide_fleetpower"
+				value = 60
+			}
 		}
 		
 	}
@@ -741,9 +860,15 @@ update_country_fleet_power = {
 		}
 		log = "Empire found with Tier 3 Fleet Power: [This.GetName]"
 		set_country_flag = tier_3_fleet_power
-		change_variable = {
-			which = "galaxy_wide_fleetpower"
-			value = 100
+
+		every_country = {
+				limit = {
+					root = event_target:global_scope_stand_in
+				}
+			change_variable = {
+				which = "galaxy_wide_fleetpower"
+				value = 100
+			}
 		}
 		
 	}
@@ -759,9 +884,15 @@ update_country_fleet_power = {
 		}
 		log = "Empire found with Tier 4 Fleet Power: [This.GetName]"
 		set_country_flag = tier_4_fleet_power
-		change_variable = {
-			which = "galaxy_wide_fleetpower"
-			value = 170
+
+		every_country = {
+				limit = {
+					root = event_target:global_scope_stand_in
+				}
+			change_variable = {
+				which = "galaxy_wide_fleetpower"
+				value = 170
+			}
 		}
 		
 	}
@@ -777,11 +908,16 @@ update_country_fleet_power = {
 		}
 		log = "Empire found with Tier 5 Fleet Power: [This.GetName]"
 		set_country_flag = tier_5_fleet_power
-		change_variable = {
-			which = "galaxy_wide_fleetpower"
-			value = 250
+
+		every_country = {
+				limit = {
+					root = event_target:global_scope_stand_in
+				}
+			change_variable = {
+				which = "galaxy_wide_fleetpower"
+				value = 250
+			}
 		}
-		
 	}
 
 	#Tier 6
@@ -795,9 +931,15 @@ update_country_fleet_power = {
 		}
 		log = "Empire found with Tier 6 Fleet Power: [This.GetName]"
 		set_country_flag = tier_6_fleet_power
-		change_variable = {
-			which = "galaxy_wide_fleetpower"
-			value = 400
+
+		every_country = {
+				limit = {
+					root = event_target:global_scope_stand_in
+				}
+			change_variable = {
+				which = "galaxy_wide_fleetpower"
+				value = 400
+			}
 		}
 		
 	}
@@ -813,9 +955,15 @@ update_country_fleet_power = {
 		}
 		log = "Empire found with Tier 7 Fleet Power: [This.GetName]"
 		set_country_flag = tier_7_fleet_power
-		change_variable = {
-			which = "galaxy_wide_fleetpower"
-			value = 700
+
+		every_country = {
+				limit = {
+					root = event_target:global_scope_stand_in
+				}
+			change_variable = {
+				which = "galaxy_wide_fleetpower"
+				value = 700
+			}
 		}
 		
 	}
@@ -865,9 +1013,14 @@ find_num_normal_empires = {
    			
 		}
 
-		change_variable = {
-			which = "num_normal_empires"
-			value = 1
+		every_country = {
+				limit = {
+					root = event_target:global_scope_stand_in
+				}
+			change_variable = {
+				which = "num_normal_empires"
+				value = 1
+			}
 		}
 		log = "Found default empire"
 		log = "Current empire num is: [This.num_normal_empires]"
