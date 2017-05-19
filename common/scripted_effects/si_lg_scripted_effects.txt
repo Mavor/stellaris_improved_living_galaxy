@@ -23,9 +23,6 @@ set_global_average_power_tiers = {
 	#has_global_flag = war_in_heaven_ended
 	#Reset global variables to 0
 	random_country = {
-		#galaxy wide pop count - note, random_country used to scope to something supported - hack but w/e
-		#ALWAYS updated 
-		update_total_pop_num = yes
 
 		if = {
 			limit = {
@@ -41,7 +38,7 @@ set_global_average_power_tiers = {
 			}
 
 			set_variable = {
-					which = "galaxy_wide_fleetpower_tier"
+					which = "galaxy_wide_fleetpower"
 					value = 0
 			}
 
@@ -52,6 +49,8 @@ set_global_average_power_tiers = {
 
 
 		}
+
+		
 	}
 	
 	
@@ -65,17 +64,16 @@ set_global_average_power_tiers = {
 		limit = {
 			is_country_type = default
 		}
-		
+
+		clear_all_strength_flags = yes	
 		log = "Found a default country, doing updates"
+
 		#Update this country's tier and add strengths to the global trackers
-		#NOTE: 
+		update_total_pop_num = yes
 
-		update_country_engineering_tech_tier = yes
-		#update_country_society_tech_tier = yes
-		#update_country_physics_tech_tier = yes
+		update_country_tech_tier = yes
 
-		#update tech
-		#fleet power
+		update_country_fleet_power = yes
 		
 	}
 
@@ -104,10 +102,23 @@ update_player_tension_indicator = {
 
 	#compute current player "strength" compared to the galactic average
 	#Also compute compared to neighbors only
-	
-	
+
+
+	##Use country flag switch like below for checking on strength flags and doing stuff
+	#switch = {
+	#			trigger = has_country_flag
+	#			refugees_neutral = { text = anomaly.4094.neutral.desc }
+	#			refugees_apology = { text = anomaly.4094.apology.desc }
+	#			refugees_insult = { text = anomaly.4094.insult.desc }
+	#			refugees_insult_xeno = { text = anomaly.4094.xenophobe.desc }
+	#			default = { text = "OK" }
+	#		}
 	
 }
+
+
+
+
 
 update_ai_tension_indicator = {
 	log = "Checking & updating tension for AI: [This.GetName]"
@@ -122,9 +133,17 @@ update_ai_tension_indicator = {
 # SI Utilities
 ##########################################################################
 
+##Update galaxy pop variable + country flags based on # of pops born
 update_total_pop_num = {
-	log = "Updating total number of pops for this country"
-	every_planet ={
+	log = "Updating total number of pops for: [This.GetName]"
+
+	#Zero out the previous value
+	set_variable = {
+		which = "temp_country_wide_pop_strength"
+		value = 0
+	}
+
+	every_owned_planet  ={
 		if = {
 
 			limit = {
@@ -141,6 +160,10 @@ update_total_pop_num = {
 
 			change_variable = {
 				which = "galaxy_wide_pop_strength"
+				value = 5
+			}
+			change_variable = {
+				which = "temp_country_wide_pop_strength"
 				value = 5
 			}
 			log = "Found a greater than 3 planet"
@@ -163,6 +186,10 @@ update_total_pop_num = {
 				which = "galaxy_wide_pop_strength"
 				value = 10
 			}
+			change_variable = {
+				which = "temp_country_wide_pop_strength"
+				value = 10
+			}
 		}
 
 		if = {
@@ -179,6 +206,10 @@ update_total_pop_num = {
 
 			change_variable = {
 				which = "galaxy_wide_pop_strength"
+				value = 15
+			}
+			change_variable = {
+				which = "temp_country_wide_pop_strength"
 				value = 15
 			}
 		}
@@ -199,6 +230,10 @@ update_total_pop_num = {
 				which = "galaxy_wide_pop_strength"
 				value = 18
 			}
+			change_variable = {
+				which = "temp_country_wide_pop_strength"
+				value = 18
+			}
 		}
 
 		if = {
@@ -215,6 +250,10 @@ update_total_pop_num = {
 
 			change_variable = {
 				which = "galaxy_wide_pop_strength"
+				value = 23
+			}
+			change_variable = {
+				which = "temp_country_wide_pop_strength"
 				value = 23
 			}
 		}
@@ -235,6 +274,10 @@ update_total_pop_num = {
 				which = "galaxy_wide_pop_strength"
 				value = 26
 			}
+			change_variable = {
+				which = "temp_country_wide_pop_strength"
+				value = 26
+			}
 		}
 
 		if = {
@@ -248,41 +291,194 @@ update_total_pop_num = {
 				which = "galaxy_wide_pop_strength"
 				value = 30
 			}
+			change_variable = {
+				which = "temp_country_wide_pop_strength"
+				value = 30
+			}
 		}
 			
 			
 		
 	}
+
+	#5-30 strength per planet..full tech at 240
+	#Tier 0
+	if = {
+		limit = {
+			AND = {
+				check_variable = {
+					which = "temp_country_wide_pop_strength"
+					value > 0
+				}
+				check_variable = {
+					which = "temp_country_wide_pop_strength"
+					value < 16
+				}
+			}
+			
+		}
+
+		set_country_flag = tier_0_pop_strength
+
+	}
+
+	#Very Weak / early empire
+	if = {
+		limit = {
+			AND = {
+				check_variable = {
+					which = "temp_country_wide_pop_strength"
+					value > 15
+				}
+				check_variable = {
+					which = "temp_country_wide_pop_strength"
+					value < 31
+				}
+			}
+			
+		}
+
+		set_country_flag = tier_1_pop_strength
+
+	}
+
+	#3-4 planet empire
+	if = {
+		limit = {
+			AND = {
+				check_variable = {
+					which = "temp_country_wide_pop_strength"
+					value > 30
+				}
+				check_variable = {
+					which = "temp_country_wide_pop_strength"
+					value < 61
+				}
+			}
+			
+		}
+
+		set_country_flag = tier_2_pop_strength
+
+	}
+
+	#4-8 planet empire
+	if = {
+		limit = {
+			AND = {
+				check_variable = {
+					which = "temp_country_wide_pop_strength"
+					value > 60
+				}
+				check_variable = {
+					which = "temp_country_wide_pop_strength"
+					value < 171
+				}
+			}
+			
+		}
+
+		set_country_flag = tier_3_pop_strength
+
+	}
+
+	if = {
+		limit = {
+			AND = {
+				check_variable = {
+					which = "temp_country_wide_pop_strength"
+					value > 170
+				}
+				check_variable = {
+					which = "temp_country_wide_pop_strength"
+					value < 251
+				}
+			}
+			
+		}
+
+		set_country_flag = tier_4_pop_strength
+
+	}
+
+	if = {
+		limit = {
+			AND = {
+				check_variable = {
+					which = "temp_country_wide_pop_strength"
+					value > 250
+				}
+				check_variable = {
+					which = "temp_country_wide_pop_strength"
+					value < 331
+				}
+			}
+			
+		}
+
+		set_country_flag = tier_5_pop_strength
+
+	}
+
+	#Very large empire... ~ 15 full planets
+	if = {
+		limit = {
+			AND = {
+				check_variable = {
+					which = "temp_country_wide_pop_strength"
+					value > 330
+				}
+				check_variable = {
+					which = "temp_country_wide_pop_strength"
+					value < 451
+				}
+			}
+			
+		}
+
+		set_country_flag = tier_6_pop_strength
+
+	}
+
+	#Extremely large empire
+	if = {
+		limit = {
+				check_variable = {
+					which = "temp_country_wide_pop_strength"
+					value > 450
+				}
+			
+			
+		}
+		set_country_flag = tier_7_pop_strength
+	}
 	
 }
 
-##TECH CHECKERS NEED TO BE REWRITTEN TO USE "HAS_TECHNLOGY" - Engineering research is bust
-update_country_engineering_tech_tier = {
+##Checks current tech progress
+##Full tech progress equal to about 8 planets at full pops (tech less important for AI)
+update_country_tech_tier = {
 	
 	log = "Entered Engineering Tech tier checker"
+	remove_country_flag = temp_blocker_tech
 
 	#tier 0
 	if = {
 		limit = {
-			#AND = {
-				has_monthly_income = {
-					resource = minerals
-					value > 0
+			AND = {
+				has_technology = tech_spaceport_1
+				NOT = {
+					has_country_flag = temp_blocker_tech
 				}
-				
-			#}
-
-			#has_monthly_income = {
-				#	resource = engineering_research
-				#	value < 16
-				#}
+			}
 			
 		}
 		log = "Empire found with Grade 0 Engineering Tech: [This.GetName]"
-		set_country_flag = tier_0_engineering_strength 
+		set_country_flag = tier_0_tech_strength 
+		set_country_flag = temp_blocker_tech
 		change_variable = {
 			which = "galaxy_wide_tech_tier"
-			value = 0
+			value = 5
 		}
 		
 	}
@@ -291,22 +487,25 @@ update_country_engineering_tech_tier = {
 	if = {
 		limit = {
 			AND = {
-				has_monthly_income = {
-					resource = engineering_research
-					value > 15
+				has_technology = tech_spaceport_1
+				OR = {
+					has_technology = tech_biolab_1
+					has_technology = tech_physics_lab_1
+					has_technology = tech_engineering_lab_1
 				}
-				has_monthly_income = {
-					resource = engineering_research
-					value < 41
+				
+				NOT = {
+					has_country_flag = temp_blocker_tech
 				}
 			}
 			
 		}
 		log = "Empire found with Grade 1 Engineering Tech: [This.GetName]"
-		set_country_flag = tier_1_engineering_strength 
+		set_country_flag = tier_1_tech_strength 
+		set_country_flag = temp_blocker_tech
 		change_variable = {
 			which = "galaxy_wide_tech_tier"
-			value = 1
+			value = 15
 		}
 		
 	}
@@ -315,22 +514,22 @@ update_country_engineering_tech_tier = {
 	if = {
 		limit = {
 			AND = {
-				has_monthly_income = {
-					resource = engineering_research
-					value > 40
-				}
-				has_monthly_income = {
-					resource = engineering_research
-					value < 81
+				has_technology = tech_spaceport_2
+				has_technology = tech_biolab_1
+				has_technology = tech_physics_lab_1
+				has_technology = tech_engineering_lab_1
+				NOT = {
+					has_country_flag = temp_blocker_tech
 				}
 			}
 			
 		}
 		log = "Empire found with Grade 2 Engineering Tech: [This.GetName]"
-		set_country_flag = tier_2_engineering_strength 
+		set_country_flag = tier_2_tech_strength 
+		set_country_flag = temp_blocker_tech 
 		change_variable = {
 			which = "galaxy_wide_tech_tier"
-			value = 2
+			value = 30
 		}
 		
 	}
@@ -339,22 +538,25 @@ update_country_engineering_tech_tier = {
 	if = {
 		limit = {
 			AND = {
-				has_monthly_income = {
-					resource = engineering_research
-					value > 80
+				has_technology = tech_spaceport_3
+				OR = {
+					has_technology = tech_biolab_2
+					has_technology = tech_physics_lab_2
+					has_technology = tech_engineering_lab_2
 				}
-				has_monthly_income = {
-					resource = engineering_research
-					value < 141
+				
+				NOT = {
+					has_country_flag = temp_blocker_tech
 				}
 			}
 			
 		}
 		log = "Empire found with Grade 3 Engineering Tech: [This.GetName]"
-		set_country_flag = tier_3_engineering_strength 
+		set_country_flag = tier_3_tech_strength 
+		set_country_flag = temp_blocker_tech 
 		change_variable = {
 			which = "galaxy_wide_tech_tier"
-			value = 3
+			value = 70
 		}
 		
 	}
@@ -363,22 +565,22 @@ update_country_engineering_tech_tier = {
 	if = {
 		limit = {
 			AND = {
-				has_monthly_income = {
-					resource = engineering_research
-					value > 140
-				}
-				has_monthly_income = {
-					resource = engineering_research
-					value < 201
+				has_technology = tech_spaceport_4
+				has_technology = tech_biolab_2
+				has_technology = tech_physics_lab_2
+				has_technology = tech_engineering_lab_2
+				NOT = {
+					has_country_flag = temp_blocker_tech
 				}
 			}
 			
 		}
 		log = "Empire found with Grade 4 Engineering Tech: [This.GetName]"
-		set_country_flag = tier_4_engineering_strength 
+		set_country_flag = tier_4_tech_strength 
+		set_country_flag = temp_blocker_tech  
 		change_variable = {
 			which = "galaxy_wide_tech_tier"
-			value = 5
+			value = 110
 		}
 		
 	}
@@ -388,22 +590,25 @@ update_country_engineering_tech_tier = {
 	if = {
 		limit = {
 			AND = {
-				has_monthly_income = {
-					resource = engineering_research
-					value > 200
+				has_technology = tech_spaceport_5
+				OR = {
+					has_technology = tech_biolab_3
+					has_technology = tech_physics_lab_3
+					has_technology = tech_engineering_lab_3
 				}
-				has_monthly_income = {
-					resource = engineering_research
-					value < 301
+				
+				NOT = {
+					has_country_flag = temp_blocker_tech
 				}
 			}
 			
 		}
 		log = "Empire found with Grade 5 Engineering Tech: [This.GetName]"
-		set_country_flag = tier_5_engineering_strength 
+		set_country_flag = tier_5_tech_strength 
+		set_country_flag = temp_blocker_tech  
 		change_variable = {
 			which = "galaxy_wide_tech_tier"
-			value = 7
+			value = 140
 		}
 		
 	}
@@ -412,22 +617,22 @@ update_country_engineering_tech_tier = {
 	if = {
 		limit = {
 			AND = {
-				has_monthly_income = {
-					resource = engineering_research
-					value > 300
-				}
-				has_monthly_income = {
-					resource = engineering_research
-					value < 501
+				has_technology = tech_spaceport_6
+				has_technology = tech_biolab_3
+				has_technology = tech_physics_lab_3
+				has_technology = tech_engineering_lab_3
+				NOT = {
+					has_country_flag = temp_blocker_tech
 				}
 			}
 			
 		}
 		log = "Empire found with Grade 6 Engineering Tech: [This.GetName]"
-		set_country_flag = tier_6_engineering_strength 
+		set_country_flag = tier_6_tech_strength
+		set_country_flag = temp_blocker_tech  
 		change_variable = {
 			which = "galaxy_wide_tech_tier"
-			value = 9
+			value = 180
 		}
 		
 	}
@@ -435,419 +640,219 @@ update_country_engineering_tech_tier = {
 	#tier 7
 	if = {
 		limit = {
-			has_monthly_income = {
-				resource = engineering_research
-				value > 500
+			AND = {
+				has_technology = tech_spaceport_6
+				has_technology = tech_biolab_3
+				has_technology = tech_physics_lab_3
+				has_technology = tech_engineering_lab_3
+				OR = {
+					has_technology = tech_mega_engineering
+					has_technology = tech_telepathy
+				}
+				NOT = {
+					has_country_flag = temp_blocker_tech
+				}
 			}
 			
 			
 		}
 		log = "Empire found with Grade 7 Engineering Tech: [This.GetName]"
-		set_country_flag = tier_7_engineering_strength 
+		set_country_flag = tier_7_tech_strength
+		set_country_flag = temp_blocker_tech 
 		change_variable = {
 			which = "galaxy_wide_tech_tier"
-			value = 12
+			value = 240
 		}
 		
 	}
-
-
-
-
-
-}
-
-update_country_society_tech_tier = {
-	
-	#tier 0
-	if = {
-		limit = {
-			AND = {
-				has_monthly_income = {
-					resource = society_research
-					value > 0
-				}
-				has_monthly_income = {
-					resource = society_research
-					value < 16
-				}
-			}
-			
-		}
-		log = "Empire found with Grade 0 society Tech: [This.GetName]"
-		set_country_flag = tier_0_society_strength 
-		change_variable = {
-			which = "galaxy_wide_tech_tier"
-			value = 0
-		}
-		
-	}
-
-	#tier 1
-	if = {
-		limit = {
-			AND = {
-				has_monthly_income = {
-					resource = society_research
-					value > 15
-				}
-				has_monthly_income = {
-					resource = society_research
-					value < 41
-				}
-			}
-			
-		}
-		log = "Empire found with Grade 1 society Tech: [This.GetName]"
-		set_country_flag = tier_1_society_strength 
-		change_variable = {
-			which = "galaxy_wide_tech_tier"
-			value = 1
-		}
-		
-	}
-
-	#tier 2
-	if = {
-		limit = {
-			AND = {
-				has_monthly_income = {
-					resource = society_research
-					value > 40
-				}
-				has_monthly_income = {
-					resource = society_research
-					value < 81
-				}
-			}
-			
-		}
-		log = "Empire found with Grade 2 society Tech: [This.GetName]"
-		set_country_flag = tier_2_society_strength 
-		change_variable = {
-			which = "galaxy_wide_tech_tier"
-			value = 2
-		}
-		
-	}
-
-	#tier 3
-	if = {
-		limit = {
-			AND = {
-				has_monthly_income = {
-					resource = society_research
-					value > 80
-				}
-				has_monthly_income = {
-					resource = society_research
-					value < 141
-				}
-			}
-			
-		}
-		log = "Empire found with Grade 3 society Tech: [This.GetName]"
-		set_country_flag = tier_3_society_strength 
-		change_variable = {
-			which = "galaxy_wide_tech_tier"
-			value = 3
-		}
-		
-	}
-
-	#tier 4
-	if = {
-		limit = {
-			AND = {
-				has_monthly_income = {
-					resource = society_research
-					value > 140
-				}
-				has_monthly_income = {
-					resource = society_research
-					value < 201
-				}
-			}
-			
-		}
-		log = "Empire found with Grade 4 society Tech: [This.GetName]"
-		set_country_flag = tier_4_society_strength 
-		change_variable = {
-			which = "galaxy_wide_tech_tier"
-			value = 5
-		}
-		
-	}
-
-
-	#tier 5
-	if = {
-		limit = {
-			AND = {
-				has_monthly_income = {
-					resource = society_research
-					value > 200
-				}
-				has_monthly_income = {
-					resource = society_research
-					value < 301
-				}
-			}
-			
-		}
-		log = "Empire found with Grade 5 society Tech: [This.GetName]"
-		set_country_flag = tier_5_society_strength 
-		change_variable = {
-			which = "galaxy_wide_tech_tier"
-			value = 7
-		}
-		
-	}
-
-	#tier 6
-	if = {
-		limit = {
-			AND = {
-				has_monthly_income = {
-					resource = society_research
-					value > 300
-				}
-				has_monthly_income = {
-					resource = society_research
-					value < 501
-				}
-			}
-			
-		}
-		log = "Empire found with Grade 6 society Tech: [This.GetName]"
-		set_country_flag = tier_6_society_strength 
-		change_variable = {
-			which = "galaxy_wide_tech_tier"
-			value = 9
-		}
-		
-	}
-
-	#tier 7
-	if = {
-		limit = {
-			has_monthly_income = {
-				resource = society_research
-				value > 500
-			}
-			
-			
-		}
-		log = "Empire found with Grade 7 society Tech: [This.GetName]"
-		set_country_flag = tier_7_society_strength 
-		change_variable = {
-			which = "galaxy_wide_tech_tier"
-			value = 12
-		}
-		
-	}
-
-
-
 
 
 }
 
 
-update_country_physics_tech_tier = {
+##Checks current fleetpower of the country and adds it to the global + marks with a country flag
+##Fully teched country gives about 240 "strength" weighting
+##Fully popped planet gives about 30
+update_country_fleet_power = {
 	
-	#tier 0
+	
+	#Tier 0
 	if = {
 		limit = {
-			AND = {
-				has_monthly_income = {
-					resource = physics_research
-					value > 0
-				}
-				has_monthly_income = {
-					resource = physics_research
-					value < 16
-				}
+			AND  ={
+				fleet_power > 0	
+				fleet_power < 3001
 			}
 			
 		}
-		log = "Empire found with Grade 0 physics Tech: [This.GetName]"
-		set_country_flag = tier_0_physics_strength 
+		log = "Empire found with Tier 0 Fleet Power: [This.GetName]"
+		set_country_flag = tier_0_fleet_power
 		change_variable = {
-			which = "galaxy_wide_tech_tier"
-			value = 0
+			which = "galaxy_wide_fleetpower"
+			value = 20
 		}
 		
 	}
 
-	#tier 1
+	#Tier 1
 	if = {
 		limit = {
-			AND = {
-				has_monthly_income = {
-					resource = physics_research
-					value > 15
-				}
-				has_monthly_income = {
-					resource = physics_research
-					value < 41
-				}
+			AND  ={
+				fleet_power > 3000
+				fleet_power < 8001
 			}
 			
 		}
-		log = "Empire found with Grade 1 physics Tech: [This.GetName]"
-		set_country_flag = tier_1_physics_strength 
+		log = "Empire found with Tier 1 Fleet Power: [This.GetName]"
+		set_country_flag = tier_1_fleet_power
 		change_variable = {
-			which = "galaxy_wide_tech_tier"
-			value = 1
+			which = "galaxy_wide_fleetpower"
+			value = 40
 		}
 		
 	}
 
-	#tier 2
+	#Tier 2
 	if = {
 		limit = {
-			AND = {
-				has_monthly_income = {
-					resource = physics_research
-					value > 40
-				}
-				has_monthly_income = {
-					resource = physics_research
-					value < 81
-				}
+			AND  ={
+				fleet_power > 8000	
+				fleet_power < 18001
 			}
 			
 		}
-		log = "Empire found with Grade 2 physics Tech: [This.GetName]"
-		set_country_flag = tier_2_physics_strength 
+		log = "Empire found with Tier 2 Fleet Power: [This.GetName]"
+		set_country_flag = tier_2_fleet_power
 		change_variable = {
-			which = "galaxy_wide_tech_tier"
-			value = 2
+			which = "galaxy_wide_fleetpower"
+			value = 60
 		}
 		
 	}
 
-	#tier 3
+	#Tier 3
 	if = {
 		limit = {
-			AND = {
-				has_monthly_income = {
-					resource = physics_research
-					value > 80
-				}
-				has_monthly_income = {
-					resource = physics_research
-					value < 141
-				}
+			AND  ={
+				fleet_power > 18000	
+				fleet_power < 35001
 			}
 			
 		}
-		log = "Empire found with Grade 3 physics Tech: [This.GetName]"
-		set_country_flag = tier_3_physics_strength 
+		log = "Empire found with Tier 3 Fleet Power: [This.GetName]"
+		set_country_flag = tier_3_fleet_power
 		change_variable = {
-			which = "galaxy_wide_tech_tier"
-			value = 3
+			which = "galaxy_wide_fleetpower"
+			value = 100
 		}
 		
 	}
 
-	#tier 4
+	#Tier 4
 	if = {
 		limit = {
-			AND = {
-				has_monthly_income = {
-					resource = physics_research
-					value > 140
-				}
-				has_monthly_income = {
-					resource = physics_research
-					value < 201
-				}
+			AND  ={
+				fleet_power > 35000
+				fleet_power < 70001
 			}
 			
 		}
-		log = "Empire found with Grade 4 physics Tech: [This.GetName]"
-		set_country_flag = tier_4_physics_strength 
+		log = "Empire found with Tier 4 Fleet Power: [This.GetName]"
+		set_country_flag = tier_4_fleet_power
 		change_variable = {
-			which = "galaxy_wide_tech_tier"
-			value = 5
+			which = "galaxy_wide_fleetpower"
+			value = 170
 		}
 		
 	}
 
-
-	#tier 5
+	#Tier 5
 	if = {
 		limit = {
-			AND = {
-				has_monthly_income = {
-					resource = physics_research
-					value > 200
-				}
-				has_monthly_income = {
-					resource = physics_research
-					value < 301
-				}
+			AND  ={
+				fleet_power > 70000	
+				fleet_power < 150001
 			}
 			
 		}
-		log = "Empire found with Grade 5 physics Tech: [This.GetName]"
-		set_country_flag = tier_5_physics_strength 
+		log = "Empire found with Tier 5 Fleet Power: [This.GetName]"
+		set_country_flag = tier_5_fleet_power
 		change_variable = {
-			which = "galaxy_wide_tech_tier"
-			value = 7
+			which = "galaxy_wide_fleetpower"
+			value = 250
 		}
 		
 	}
 
-	#tier 6
+	#Tier 6
 	if = {
 		limit = {
-			AND = {
-				has_monthly_income = {
-					resource = physics_research
-					value > 300
-				}
-				has_monthly_income = {
-					resource = physics_research
-					value < 501
-				}
+			AND  ={
+				fleet_power > 150000	
+				fleet_power < 600001
 			}
 			
 		}
-		log = "Empire found with Grade 6 physics Tech: [This.GetName]"
-		set_country_flag = tier_6_physics_strength 
+		log = "Empire found with Tier 6 Fleet Power: [This.GetName]"
+		set_country_flag = tier_6_fleet_power
 		change_variable = {
-			which = "galaxy_wide_tech_tier"
-			value = 9
-		}
-		
-	}
-
-	#tier 7
-	if = {
-		limit = {
-			has_monthly_income = {
-				resource = physics_research
-				value > 500
-			}
-			
-			
-		}
-		log = "Empire found with Grade 7 physics Tech: [This.GetName]"
-		set_country_flag = tier_7_physics_strength 
-		change_variable = {
-			which = "galaxy_wide_tech_tier"
-			value = 12
+			which = "galaxy_wide_fleetpower"
+			value = 400
 		}
 		
 	}
 
 
+	#Tier 7
+	if = {
+		limit = {
+			AND  ={
+				fleet_power > 600000 #AI with this much fleet power doesn't usually happen
+			}
+			
+		}
+		log = "Empire found with Tier 7 Fleet Power: [This.GetName]"
+		set_country_flag = tier_7_fleet_power
+		change_variable = {
+			which = "galaxy_wide_fleetpower"
+			value = 700
+		}
+		
+	}
+}
 
 
+clear_all_strength_flags = {
+	#Remove all flags refreshed yearly showing country strengths - P'dox, y u don't have this?
+	#Pop strength indicators for this country
+	remove_country_flag = tier_0_pop_strength
+	remove_country_flag = tier_1_pop_strength
+	remove_country_flag = tier_2_pop_strength
+	remove_country_flag = tier_3_pop_strength
+	remove_country_flag = tier_4_pop_strength
+	remove_country_flag = tier_5_pop_strength
+	remove_country_flag = tier_6_pop_strength
+	remove_country_flag = tier_7_pop_strength
 
+	#Tech strength indicators for this country
+	remove_country_flag = tier_0_tech_strength
+	remove_country_flag = tier_1_tech_strength
+	remove_country_flag = tier_2_tech_strength
+	remove_country_flag = tier_3_tech_strength
+	remove_country_flag = tier_4_tech_strength
+	remove_country_flag = tier_5_tech_strength
+	remove_country_flag = tier_6_tech_strength
+	remove_country_flag = tier_7_tech_strength
+
+	#Fleet Power indicators for this country
+	remove_country_flag = tier_0_fleet_power
+	remove_country_flag = tier_1_fleet_power
+	remove_country_flag = tier_2_fleet_power
+	remove_country_flag = tier_3_fleet_power
+	remove_country_flag = tier_4_fleet_power
+	remove_country_flag = tier_5_fleet_power
+	remove_country_flag = tier_6_fleet_power
+	remove_country_flag = tier_7_fleet_power
 }
 
 
@@ -864,7 +869,8 @@ find_num_normal_empires = {
 			which = "num_normal_empires"
 			value = 1
 		}
-		log = "Found default empire, current num is: [num_normal_empires]"
+		log = "Found default empire"
+		log = "Current empire num is: [This.num_normal_empires]"
 		
 	}
 }

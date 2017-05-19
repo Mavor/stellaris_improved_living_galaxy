@@ -21,7 +21,7 @@ event = {
 
 		##TESTING
 		set_global_average_power_tiers = yes
-
+		find_num_normal_empires = yes #Should only need to be done once
 		##
 
 
