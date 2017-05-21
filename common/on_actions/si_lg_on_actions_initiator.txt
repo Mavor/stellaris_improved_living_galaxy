@@ -12,3 +12,10 @@ on_yearly_pulse = {
 	}
 }
 
+#On pressing begin at intro
+on_press_begin = {
+	events = {
+		si_lg_on_action.50
+	}
+}
+
