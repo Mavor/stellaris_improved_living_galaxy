@@ -25,7 +25,7 @@ set_global_average_power_tiers = {
 
 	#Note: Variables are local to the scope they are set in
 	event_target:global_scope_stand_in = {
-		log = "Found our primary global scope holder: [This.GetName]"
+		log = "Scope Holder(Player): [This.GetName]"
 
 		log = "Global Tech -1yr: [This.galaxy_wide_tech_tier]"
 		log = "Galaxy Wide Fleet Power -1yr: [This.galaxy_wide_fleetpower]"
@@ -48,6 +48,13 @@ set_global_average_power_tiers = {
 			which = "galaxy_wide_pop_strength"
 			value = 0
 		}
+
+		update_current_year = yes
+
+		log = "-"
+		log = "-"
+		log = "Years passed: [This.current_year]"
+
 	}
 	
 	
@@ -63,7 +70,7 @@ set_global_average_power_tiers = {
 		log = "-"
 		log = "-"
 		log = "-"
-		log = "Found a default country, doing updates"
+		log = "Update - Default Emp: [This.GetName]"
 
 		#Update this country's tier and add strengths to the global trackers
 		update_total_pop_num = yes
@@ -131,7 +138,7 @@ update_ai_tension_indicator = {
 
 ##Update galaxy pop variable + country flags based on # of pops born
 update_total_pop_num = {
-	log = "POP Update --- [This.GetName]"
+	#log = "POP Update --- [This.GetName]"
 
 	#Zero out the previous value
 	set_variable = {
@@ -161,10 +168,13 @@ update_total_pop_num = {
 				}
 			}
 			
-			change_variable = {
-				which = "temp_country_wide_pop_strength"
-				value = 5
+			owner = {
+				change_variable = {
+					which = "temp_country_wide_pop_strength"
+					value = 5
+				}
 			}
+			
 			
 		}
 
@@ -187,9 +197,11 @@ update_total_pop_num = {
 					}
 			}
 
+			owner = {
 			change_variable = {
 				which = "temp_country_wide_pop_strength"
 				value = 10
+			}
 			}
 
 		}
@@ -212,9 +224,11 @@ update_total_pop_num = {
 					value = 15
 				}
 			}
+			owner = {
 			change_variable = {
 				which = "temp_country_wide_pop_strength"
 				value = 15
+			}
 			}
 		}
 
@@ -236,9 +250,12 @@ update_total_pop_num = {
 					value = 18
 				}
 			}
+
+			owner = {
 			change_variable = {
 				which = "temp_country_wide_pop_strength"
 				value = 18
+			}
 			}
 		}
 
@@ -260,9 +277,12 @@ update_total_pop_num = {
 					value = 23
 				}
 			}
+
+			owner = {
 			change_variable = {
 				which = "temp_country_wide_pop_strength"
 				value = 23
+			}
 			}
 		}
 
@@ -284,9 +304,12 @@ update_total_pop_num = {
 					value = 26
 				}
 			}
+
+			owner = {
 			change_variable = {
 				which = "temp_country_wide_pop_strength"
 				value = 26
+			}
 			}
 		}
 
@@ -303,9 +326,12 @@ update_total_pop_num = {
 					value = 30
 				}
 			}
+
+			owner = {
 			change_variable = {
 				which = "temp_country_wide_pop_strength"
 				value = 30
+			}
 			}
 		}
 			
@@ -472,235 +498,7 @@ update_total_pop_num = {
 ##Checks current tech progress
 ##Full tech progress equal to about 8 planets at full pops (tech less important for AI)
 update_country_tech_tier = {
-	
-	log = "TECH Update --- [This.GetName]"
-	remove_country_flag = temp_blocker_tech
-
-	#tier 0
-	if = {
-		limit = {
-			AND = {
-				has_technology = tech_spaceport_1
-				NOT = {
-					has_country_flag = temp_blocker_tech
-				}
-			}
-			
-		}
-		log = "Tier 0 Tech"
-		set_country_flag = tier_0_tech_strength 
-		set_country_flag = temp_blocker_tech
-
-		event_target:global_scope_stand_in = {
-			change_variable = {
-				which = "galaxy_wide_tech_tier"
-				value = 5
-			}
-		}
-		
-	}
-
-	#tier 1
-	if = {
-		limit = {
-			AND = {
-				has_technology = tech_spaceport_1
-				OR = {
-					has_technology = tech_biolab_1
-					has_technology = tech_physics_lab_1
-					has_technology = tech_engineering_lab_1
-				}
-				
-				NOT = {
-					has_country_flag = temp_blocker_tech
-				}
-			}
-			
-		}
-		log = "Tier 1 Tech"
-		set_country_flag = tier_1_tech_strength 
-		set_country_flag = temp_blocker_tech
-
-		event_target:global_scope_stand_in = {
-			change_variable = {
-				which = "galaxy_wide_tech_tier"
-				value = 15
-			}
-		}
-		
-	}
-
-	#tier 2
-	if = {
-		limit = {
-			AND = {
-				has_technology = tech_spaceport_2
-				has_technology = tech_biolab_1
-				has_technology = tech_physics_lab_1
-				has_technology = tech_engineering_lab_1
-				NOT = {
-					has_country_flag = temp_blocker_tech
-				}
-			}
-			
-		}
-		log = "Tier 2 Tech"
-		set_country_flag = tier_2_tech_strength 
-		set_country_flag = temp_blocker_tech 
-		event_target:global_scope_stand_in = {
-			change_variable = {
-				which = "galaxy_wide_tech_tier"
-				value = 30
-			}
-		}
-		
-	}
-
-	#tier 3
-	if = {
-		limit = {
-			AND = {
-				has_technology = tech_spaceport_3
-				OR = {
-					has_technology = tech_biolab_2
-					has_technology = tech_physics_lab_2
-					has_technology = tech_engineering_lab_2
-				}
-				
-				NOT = {
-					has_country_flag = temp_blocker_tech
-				}
-			}
-			
-		}
-		set_country_flag = tier_3_tech_strength 
-		set_country_flag = temp_blocker_tech 
-
-		log = "Tier 3 Tech"
-		event_target:global_scope_stand_in = {
-			change_variable = {
-				which = "galaxy_wide_tech_tier"
-				value = 70
-			}
-		}
-		
-	}
-
-	#tier 4
-	if = {
-		limit = {
-			AND = {
-				has_technology = tech_spaceport_4
-				has_technology = tech_biolab_2
-				has_technology = tech_physics_lab_2
-				has_technology = tech_engineering_lab_2
-				NOT = {
-					has_country_flag = temp_blocker_tech
-				}
-			}
-			
-		}
-		log = "Tier 4 Tech"
-		set_country_flag = tier_4_tech_strength 
-		set_country_flag = temp_blocker_tech
-
-		event_target:global_scope_stand_in = {  
-			change_variable = {
-				which = "galaxy_wide_tech_tier"
-				value = 110
-			}
-		}
-		
-	}
-
-
-	#tier 5
-	if = {
-		limit = {
-			AND = {
-				has_technology = tech_spaceport_5
-				OR = {
-					has_technology = tech_biolab_3
-					has_technology = tech_physics_lab_3
-					has_technology = tech_engineering_lab_3
-				}
-				
-				NOT = {
-					has_country_flag = temp_blocker_tech
-				}
-			}
-			
-		}
-		set_country_flag = tier_5_tech_strength 
-		set_country_flag = temp_blocker_tech  
-		log = "Tier 5 Tech"
-		event_target:global_scope_stand_in = {
-			change_variable = {
-				which = "galaxy_wide_tech_tier"
-				value = 140
-			}
-		}
-		
-	}
-
-	#tier 6
-	if = {
-		limit = {
-			AND = {
-				has_technology = tech_spaceport_6
-				has_technology = tech_biolab_3
-				has_technology = tech_physics_lab_3
-				has_technology = tech_engineering_lab_3
-				NOT = {
-					has_country_flag = temp_blocker_tech
-				}
-			}
-			
-		}
-		set_country_flag = tier_6_tech_strength
-		set_country_flag = temp_blocker_tech 
-		log = "Tier 6 Tech"
-
-		event_target:global_scope_stand_in = {
-			change_variable = {
-				which = "galaxy_wide_tech_tier"
-				value = 180
-			}
-		}
-		
-	}
-
-	#tier 7
-	if = {
-		limit = {
-			AND = {
-				has_technology = tech_spaceport_6
-				has_technology = tech_biolab_3
-				has_technology = tech_physics_lab_3
-				has_technology = tech_engineering_lab_3
-				OR = {
-					has_technology = tech_mega_engineering
-					has_technology = tech_telepathy
-				}
-				NOT = {
-					has_country_flag = temp_blocker_tech
-				}
-			}
-			
-			
-		}
-		log = "Tier 7 Tech"
-		set_country_flag = tier_7_tech_strength
-		set_country_flag = temp_blocker_tech 
-
-		event_target:global_scope_stand_in = {
-			change_variable = {
-				which = "galaxy_wide_tech_tier"
-				value = 240
-			}
-		}
-		
-	}
+	#Need to figure out a way to figure out tech.. or might not need it
 
 
 }
@@ -711,7 +509,7 @@ update_country_tech_tier = {
 ##Fully popped planet gives about 30
 update_country_fleet_power = {
 	
-	log = "FLEET POWER Update -- [This.GetName]"
+	#log = "FLEET POWER Update -- [This.GetName]"
 	#Tier 0
 	if = {
 		limit = {
@@ -942,4 +740,20 @@ find_num_normal_empires = {
 		}
 		
 	}
+}
+
+
+
+
+#Just want to log out years passed... is that so hard to ask?
+update_current_year = {
+	
+	event_target:global_scope_stand_in = {
+		change_variable = {
+			which = "current_year"
+			value = 1
+		}
+	}
+		
+
 }
